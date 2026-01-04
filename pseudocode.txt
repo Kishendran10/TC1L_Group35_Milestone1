@@ -1,0 +1,113 @@
+1. Pseudocode
+ Main Program
+START
+DISPLAY "Student Attendance Tracker – Milestone 1" DISPLAY input rules: - INT fields accept numbers only
+- TEXT fields must contain letters
+- Status must be 'In Class' or 'Not In Class' CALL CreateSheet
+CALL DefineColumns
+CALL InsertAttendanceRecords
+CALL DisplayAttendanceSheet
+END
+
+
+
+2. Create sheet
+CreateSheet
+PROMPT user to enter attendance sheet name
+READ sheetName
+DISPLAY confirmation message
+END CreateShee
+
+
+
+3. Define columns
+DefineColumns
+PROMPT user for number of columns (1 – 10)
+READ columnCount
+WHILE columnCount < 1 OR columnCount > 10
+PROMPT user again
+READ columnCount
+END WHILE
+FOR each column from 1 to columnCount
+PROMPT user to enter column name
+READ columnName
+PROMPT user to enter column type (INT or TEXT)
+READ columnType
+WHILE columnType is not INT AND not TEXT
+PROMPT user again
+READ columnType
+END WHILE
+END FOR
+DISPLAY sheet structure summary
+END DefineColumns
+
+
+4. Insert Attendance Records
+MODULE: InsertAttendanceRecords
+InsertAttendanceRecords
+SET rowCount = 0
+SET choice = 'y' WHILE choice = 'y' OR choice = 'Y' DISPLAY "Adding new attendance record" FOR each column
+SET validInput = false
+WHILE validInput = false
+IF column is Status
+PROMPT user to enter "in class" or "not in class" ELSE
+PROMPT user to enter value
+END IF
+READ input
+IF input is empty
+DISPLAY error message
+CONTINUE loop
+END IF
+IF column type is INT AND input is not numeric
+DISPLAY error message
+CONTINUE loop
+END IF
+IF column type is TEXT AND column is NOT Status
+AND input does not contain any alphabet
+DISPLAY error message
+CONTINUE loop
+END IF
+IF column is Status
+IF input equals "in class" STORE "In Class" ELSE IF input equals "not in class" STORE "Not In Class" ELSE
+DISPLAY error message
+CONTINUE loop
+END IF
+ELSE
+STORE input as entered
+END IF
+SET validInput = true
+END WHILE
+END FOR
+INCREMENT rowCount
+DISPLAY "Record added successfully" PROMPT user "Add another record? (y/n)" READ choice
+END WHILE
+END InsertAttendanceRecords
+
+
+5 Display Attendance Sheet
+DisplayAttendanceSheet
+DISPLAY "Final Attendance Sheet (CSV Format)" DISPLAY all column headers separated by commas
+FOR each stored row
+DISPLAY all column values separated by commas
+END FOR
+DISPLAY "End of Program" END DisplayAttendanceSheet
+
+
+
+6 Basic Error Handling
+START ErrorHandling_SheetName
+DISPLAY "Enter attendance sheet name" READ sheetName
+SET onlySpaces ← TRUE
+FOR each character in sheetName
+IF character is not a space
+SET onlySpaces ← FALSE
+END IF
+END FOR
+IF sheetName is empty OR onlySpaces = TRUE
+DISPLAY "Error: Sheet name is empty" RETURN to input sheet name
+ELSE
+DISPLAY "Attendance sheet created successfully" END IF
+END ErrorHandling_SheetName
+
+
+
